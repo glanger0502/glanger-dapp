@@ -26,7 +26,7 @@ export default function MintNFT() {
     }, [mintNum])
 
     return (
-        <div className='relative container flex flex-col items-center justify-items-center w-full px-4 pt-32 pb-80 prose lg:prose-xl'>
+        <div className='relative container mx-auto my-0 flex flex-col items-center justify-items-center w-full px-4 pt-32 pb-80 prose lg:prose-xl'>
             <h1 className=''>Glanger NFT</h1>
             <h3 className=''>Mint a Glanger NFT!</h3>
             <p className='text-lg max-w-7xl'>It's a NFT for test only. Staking will open soon to earn $GGC.
