@@ -1,29 +1,16 @@
 import React from "react"
-import { useAccount } from 'wagmi';
-import { useState, useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 import MintNFTButton from './MintButton';
 
+import { useConnectState } from "../../hooks/useConnectState";
+import { useMintNum } from "../../hooks/useMintNum";
+
 export default function MintNFT() {
-    const [mintNum, setMintNum] = useState(1);
-    const { isConnected } = useAccount();
-    
+    const connectState = useConnectState();
+    const {mintNum, setMintNum} = useMintNum();
     const price = 0.001;
     const totalPrice = price * mintNum;
-
-    const [connectState, setConnectState] = useState(false);
-    useEffect(() => {
-        if(isConnected) {
-            setConnectState(true);
-        }
-    }, [isConnected])
-
-    useEffect(() => {
-        if(mintNum <= 0) {
-            setMintNum(1);
-        }
-
-    }, [mintNum])
 
     return (
         <div className='relative container mx-auto my-0 flex flex-col items-center justify-items-center w-full px-4 pt-32 pb-80 prose lg:prose-xl'>

@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 
 const stakingContractAddress = process.env.NEXT_PUBLIC_STAKING_ADDRESS;
 
-export default function Reward(props:{ rewards: BigNumber|undefined}) {
+export default function Reward(props:{ rewards: BigNumber | undefined}) {
     // connected
     const { address } = useAccount();
     console.log(props.rewards);

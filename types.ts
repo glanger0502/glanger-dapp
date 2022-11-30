@@ -1,27 +1,20 @@
 import { BigNumber } from 'ethers';
 
-
-// get userStakedNFT
-export type UserStakedNFTA = {
+export type UserStakedNFTs = {
     _tokensStaked: BigNumber;
     _availableRewards: BigNumber;
     tokenIds: BigNumber[];
 } 
 
-export type UserStakedNFTArr = [BigNumber, BigNumber, BigNumber[]]
-
-
-export type UserStakedNFT = UserStakedNFTA & UserStakedNFTArr
-
-export type UserAllNFTs = {
+export type UserNFTs = {
     message: string,
     result: 
-        StakedNFT[]
+        UserNFT[]
     ,
     status: string
 }
 
-export type StakedNFT = {
+export type UserNFT = {
     tokenID: string,
     tokenName: string,
     tokenSymbol: string

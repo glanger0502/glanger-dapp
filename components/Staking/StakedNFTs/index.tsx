@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { BigNumber } from 'ethers';
-import { UserAllNFTs, StakedNFT } from "../../../types";
+import { UserNFTs, UserNFT } from "../../../types";
 
 const stakingContractAddress = process.env.NEXT_PUBLIC_STAKING_ADDRESS;
 const nftUrl = process.env.NEXT_PUBLIC_NFT_URL;
 
-export default function NFTs(props: {nftStatus:boolean, data:UserAllNFTs|undefined}) {
-    const nfts = props.data?.result;
+export default function StakedNFTs(props: {nftStatus:boolean, data:UserNFT[]|undefined}) {
+    const nfts = props.data;
     const stakedNFTs = props.data;
 
     const [tokenStatus, setTokenStatus] = useState(false);
@@ -72,7 +72,7 @@ export default function NFTs(props: {nftStatus:boolean, data:UserAllNFTs|undefin
         <div className='flex flex-col'>
             <div className='flex flex-row mx-auto my-0'>
             {
-                stakedNFTs?.result.map((ele:StakedNFT,key:number) => (
+                stakedNFTs?.map((ele:UserNFT,key:number) => (
                     <div key={key} className="m-1">
                         <button className='' onClick={(e) => {addPic2Stake(ele.tokenID);handleClick(e, ele.tokenID)}}>
                             <img src={nftUrl + ele.tokenID + '.png'} width={140} height={180} className={`rounded-md border-red-400 hover:border-2 focus:border-2 after:border-2`} key={key} id={'img' +ele.tokenID}/>

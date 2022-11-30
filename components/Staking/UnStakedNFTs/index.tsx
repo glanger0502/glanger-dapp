@@ -1,11 +1,11 @@
 
-import { UserAllNFTs, StakedNFT } from "../../../types";
+import { UserNFT } from "../../../types";
 import StakeNFTButton from './StakeNFTButton';
 import ApprovalAllButton from './ApprovalAllButton';
 
 const nftUrl = process.env.NEXT_PUBLIC_NFT_URL;
 
-export default function NotNFTs(props: {nftStatus:boolean, data:UserAllNFTs|undefined}) {
+export default function NotNFTs(props: {nftStatus:boolean, data:UserNFT[]|undefined}) {
 
     const nftStatus = props.nftStatus;
     const allNFTs = props.data;
@@ -31,7 +31,7 @@ export default function NotNFTs(props: {nftStatus:boolean, data:UserAllNFTs|unde
         <div className='flex flex-col'>
             <div className='flex flex-row mx-auto my-0'>
             {
-                allNFTs?.result.map((ele:StakedNFT,key:number) => (
+                allNFTs?.map((ele:UserNFT,key:number) => (
                     <div key={key} className="m-1">
                         <button className='' onClick={(e) => {addPic2Stake(ele.tokenID);handleClick(e, ele.tokenID)}}>
                             <img src={nftUrl + ele.tokenID + '.png'} width={140} height={180} className={`rounded-md border-red-400 hover:border-2 focus:border-2 after:border-2`} key={key} id={'img' +ele.tokenID}/>
