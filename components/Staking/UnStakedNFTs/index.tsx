@@ -1,7 +1,8 @@
 
-import { UserNFT } from "../../../types";
+import { UserNFT } from '../../../types';
 import StakeNFTButton from './StakeNFTButton';
 import ApprovalAllButton from './ApprovalAllButton';
+import { useState } from 'react';
 
 const nftUrl = process.env.NEXT_PUBLIC_NFT_URL;
 
@@ -9,6 +10,10 @@ export default function NotNFTs(props: {nftStatus:boolean, data:UserNFT[]|undefi
 
     const nftStatus = props.nftStatus;
     const allNFTs = props.data;
+
+    //select nfts
+    const initNFT: UserNFT[] = [{tokenID:'',tokenName:'', tokenSymbol:''}];
+    const [selectedNFTs, setSelectedNFTs] = useState(initNFT);
 
     const selectedPic: string[] = [];
     function addPic2Stake(tokenId:string) {
@@ -23,8 +28,16 @@ export default function NotNFTs(props: {nftStatus:boolean, data:UserNFT[]|undefi
     }
 
     const handleClick = (event: any, id: string) => {
-        const a = document.getElementById('img' + id);
-        a?.classList.toggle('border-2');
+        const imgObj = document.getElementById('img' + id);
+        imgObj?.classList.toggle('border-2');
+        imgObj?.classList.toggle('border-solid');
+        if(allNFTs != undefined) {
+            allNFTs.forEach((ele, key) => {
+                if (id == ele.tokenID) {
+                    setSelectedNFTs([allNFTs[key]]);
+                }
+            });
+        } 
     }
     
     return (
@@ -41,7 +54,7 @@ export default function NotNFTs(props: {nftStatus:boolean, data:UserNFT[]|undefi
             </div>
             <div>
                 <ApprovalAllButton />
-                <StakeNFTButton nftStatus={nftStatus} data={allNFTs} />
+                <StakeNFTButton nftStatus={nftStatus} data={selectedNFTs} />
             </div>
       </div>
     );

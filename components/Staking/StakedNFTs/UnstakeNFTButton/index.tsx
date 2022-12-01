@@ -8,7 +8,7 @@ import { useToast } from '@chakra-ui/react'
 
 const stakingContractAddress = process.env.NEXT_PUBLIC_STAKING_ADDRESS;
 
-export default function StakeNFTButton(props:{nftStatus:boolean, data:UserNFT[]|undefined}) {
+export default function UnStakeNFTButton(props:{nftStatus:boolean, data:UserNFT[]|undefined}) {
     const { address } = useAccount();
     const [debouncedAddress] = useDebounce(address, 500);
     const toast = useToast();
@@ -19,48 +19,48 @@ export default function StakeNFTButton(props:{nftStatus:boolean, data:UserNFT[]|
     useEffect(() => {
         if(nfts != undefined && nfts.length) {
             if(nfts[0].tokenID) {
+                console.log(currentToken);
                 setCurrentToken(BigNumber.from(nfts[0].tokenID)); 
                 setTokenStatus(true);
             }
         }
     }, [nfts])
 
-    const { config:stakeConfig } = usePrepareContractWrite({
+    const { config } = usePrepareContractWrite({
         address: stakingContractAddress,
         abi: [
             {
                 "inputs": [
                     {
                         "internalType": "uint256",
-                        "name": "_tokenId",
+                        "name": "tokenId",
                         "type": "uint256"
                     }
                 ],
-                "name": "stake",
+                "name": "withdraw",
                 "outputs": [],
-                "stateMutability": "payable",
+                "stateMutability": "nonpayable",
                 "type": "function"
             },
         ],
-        functionName: 'stake',
+        functionName: 'withdraw',
         args:[currentToken],
         enabled: tokenStatus,
         overrides: {
-            from: debouncedAddress,
-            value: ethers.utils.parseEther("0"),
+            // from: debouncedAddress,
         },
-        onError(prepareError) {
-            console.log('Error', prepareError.message);
+        onError(prepareError2) {
+            console.log('Error', prepareError2.message);
         }
     })
 
-    const { write:stakeWrite, isSuccess} = useContractWrite(stakeConfig);
+    const { write:stakeWrite, isSuccess } = useContractWrite(config);
 
     useEffect(() => {
         if(isSuccess) {
             toast({
-                title: 'Staking is on the way.',
-                description: "staking glanger nft.",
+                title: 'Withdraw is on the way.',
+                description: "withdraw glanger nft.",
                 status: 'success',
                 duration: 5000,
                 isClosable: true,
@@ -93,16 +93,16 @@ export default function StakeNFTButton(props:{nftStatus:boolean, data:UserNFT[]|
                         "type": "bool"
                     }
                 ],
-                "name": "Stake",
+                "name": "Withdraw",
                 "type": "event"
             }
         ],
-        eventName: 'Stake',
+        eventName: 'Withdraw',
         listener(node, label, owner) {
             console.log(node, label, owner)
             toast({
-                title: 'Stake Success!',
-                description: "stake glanger nft success",
+                title: 'Withdraw Success!',
+                description: "withdraw glanger nft success",
                 status: 'success',
                 duration: 2000,
                 isClosable: true,
@@ -111,6 +111,8 @@ export default function StakeNFTButton(props:{nftStatus:boolean, data:UserNFT[]|
     })
 
     return (
-        <button className="btn btn-primary mx-1" onClick={(e) => {e.preventDefault(); stakeWrite?.()}}>Stake NFT</button>
+        <div>
+            <button className="btn btn-primary mx-1" onClick={(e) => {e.preventDefault(); stakeWrite?.()}}>Withdraw NFT</button>
+        </div>
     )
 }

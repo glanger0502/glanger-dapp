@@ -1,13 +1,14 @@
 import { useAccount, usePrepareContractWrite, useContractWrite } from 'wagmi';
 import { useEffect, useState } from "react";
 import { BigNumber } from 'ethers';
+import { useAddressState } from '../../../hooks/ussAddressState';
 
 const stakingContractAddress = process.env.NEXT_PUBLIC_STAKING_ADDRESS;
 
 export default function Reward(props:{ rewards: BigNumber | undefined}) {
     // connected
-    const { address } = useAccount();
-    console.log(props.rewards);
+    const {address} = useAddressState();
+    // console.log(props.rewards);
     let rewards = BigNumber.from("0");
     if(props.rewards != undefined) {
         rewards = props.rewards;
