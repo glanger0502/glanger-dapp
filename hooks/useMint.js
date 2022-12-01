@@ -2,7 +2,7 @@
 import { useContractWrite, usePrepareContractWrite, useContractEvent } from 'wagmi';
 import { useDebounce } from 'use-debounce';
 import { BigNumber, ethers } from 'ethers';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useAddressState } from './ussAddressState';
 import { useToast } from '@chakra-ui/react'
 
