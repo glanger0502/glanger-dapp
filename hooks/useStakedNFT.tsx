@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useContractRead } from 'wagmi';
+import { useAddressState } from "./ussAddressState";
 
 const stakingContractAddress = process.env.NEXT_PUBLIC_STAKING_ADDRESS;
-const nftContractAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
-const etherscan = process.env.NEXT_PUBLIC_ETHERSCAN;
 
-export function useStakedNFTs(address: any) {
+export function useStakedNFTs() {
+    const {addressState, address} = useAddressState();
     const { data, isError, isLoading, isSuccess } = useContractRead({
         address: stakingContractAddress,
         abi:[
@@ -40,8 +40,8 @@ export function useStakedNFTs(address: any) {
             }
         ],
         functionName: 'userStakeInfo',
-        args:[address ?? `0x`],
-        enabled: true,
+        args:[address ?? '0x'],
+        enabled: addressState,
         onError(error) {
             console.log('Error', error.message);
         },

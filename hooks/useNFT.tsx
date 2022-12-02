@@ -5,10 +5,9 @@ import { useStakedNFTs } from "./useStakedNFT";
 import { UserNFT } from '../types';
 
 export function useNFT() {
+    const {data:userNFTs, error} = getAllNFTs();
 
-    const {addressState, address} = useAddressState();
-    const {data:userNFTs} = getAllNFTs(address);
-    const {tokenIds, rewards:rewardToken} = useStakedNFTs(address);
+    const {tokenIds, rewards:rewardToken} = useStakedNFTs();
 
     if(!userNFTs) {
         let nftStatus = false;

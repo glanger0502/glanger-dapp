@@ -16,7 +16,7 @@ export function useSortedNFTs(userNFTs:UserNFT[]|undefined, tokenIds:readonly Bi
     tokenIds?.forEach((val, key) => {
         newTokenIds.push(val.toString());
     })
-
+    
     userNFTs?.forEach((ele, index) => {
         if (!tmpIds.includes(ele.tokenID)) {
             tmpIds.push(ele.tokenID);

@@ -36,6 +36,8 @@ export default function StakedNFTs(props: {nftStatus:boolean, data:UserNFT[]|und
             stakedNFTs.forEach((ele, key) => {
                 if (id == ele.tokenID) {
                     setSelectedNFTs([stakedNFTs[key]]);
+                } else {
+                    setSelectedNFTs([stakedNFTs[0]]);
                 }
             });
         }

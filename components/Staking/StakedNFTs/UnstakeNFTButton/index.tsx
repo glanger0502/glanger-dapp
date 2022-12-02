@@ -5,15 +5,16 @@ import { useState, useEffect } from 'react';
 import { useAccount, useContractEvent, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { UserNFT, UserNFTs } from '../../../../types';
 import { useToast } from '@chakra-ui/react'
+import { useAddressState } from '../../../../hooks/ussAddressState';
 
 const stakingContractAddress = process.env.NEXT_PUBLIC_STAKING_ADDRESS;
 
 export default function UnStakeNFTButton(props:{nftStatus:boolean, data:UserNFT[]|undefined}) {
-    const { address } = useAccount();
-    const [debouncedAddress] = useDebounce(address, 500);
+
     const toast = useToast();
     const nfts = props.data;
 
+    console.log(nfts);
     const [tokenStatus, setTokenStatus] = useState(false);
     const [currentToken, setCurrentToken] = useState(BigNumber.from("0"));
     useEffect(() => {

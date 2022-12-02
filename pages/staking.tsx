@@ -15,7 +15,7 @@ import { useNFT } from "../hooks/useNFT";
 const Staking: NextPage = () => {
     const chainStatus = useChainState();
     const connectState = useConnectState();
-
+    console.log('connectState', connectState);
     const {nftStatus, stakedNFTs, notStakedNFTs, rewardToken} = useNFT();
 
     return (

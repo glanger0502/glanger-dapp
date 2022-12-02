@@ -8,7 +8,7 @@ export function useAddressState() {
         if(isConnected) {
             setAddressState(true);
         }
-        setAddressState(true);
+        // setAddressState(false);
     }, [isConnected])
 
     return {addressState, address};

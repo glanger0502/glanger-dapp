@@ -6,7 +6,9 @@ export function useConnectState() {
     const { isConnected } = useAccount();
     const [connectState, setConnectState] = useState(false);
     useEffect(() => {
-        setConnectState(true);
+        if(isConnected) {
+            setConnectState(true);
+        }
     }, [isConnected])
 
     return connectState;
