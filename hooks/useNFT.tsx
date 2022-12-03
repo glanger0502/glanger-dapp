@@ -5,19 +5,19 @@ import { useStakedNFTs } from "./useStakedNFT";
 import { UserNFT } from '../types';
 
 export function useNFT() {
-    const {data:userNFTs, error} = getAllNFTs();
+    // const {data:userNFTs, error} = getAllNFTs();
 
-    const {tokenIds, rewards:rewardToken} = useStakedNFTs();
+    // const {tokenIds, rewards:rewardToken} = useStakedNFTs();
 
-    if(!userNFTs) {
-        let nftStatus = false;
-        let stakedNFTs: UserNFT[] = [];
-        let notStakedNFTs: UserNFT[] = [];
-        return {nftStatus, stakedNFTs, notStakedNFTs, undefined}
-    }
-    const allnfts = userNFTs.result;
+    // if(!userNFTs) {
+    //     let nftStatus = false;
+    //     let stakedNFTs: UserNFT[] = [];
+    //     let notStakedNFTs: UserNFT[] = [];
+    //     return {nftStatus, stakedNFTs, notStakedNFTs, undefined}
+    // }
+    // const allnfts = userNFTs.result;
 
-    const {nftStatus, stakedNFTs, notStakedNFTs} = useSortedNFTs(allnfts, tokenIds);
+    // const {nftStatus, stakedNFTs, notStakedNFTs} = useSortedNFTs(allnfts, tokenIds);
 
-    return {nftStatus, stakedNFTs, notStakedNFTs, rewardToken}
+    // return {nftStatus, stakedNFTs, notStakedNFTs, rewardToken}
 }

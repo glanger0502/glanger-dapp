@@ -11,13 +11,67 @@ import NftHeader from '../components/Header/nftHeader/index';
 import { useChainState } from "../hooks/useChainState";
 import { useConnectState } from "../hooks/useConnectState";
 import { useNFT } from "../hooks/useNFT";
+import { getAllNFTs } from "../helpers/getAllNFTs";
+import { useStakedNFTs } from "../hooks/useStakedNFT";
+import { UserNFT, UserNFTs } from "../types";
+// import { useSortedNFTs } from "../hooks/useSortedNFT";
+
+
+const sortedNFTs = (userNFTs:UserNFTs|undefined, tokenIds:readonly BigNumber[]|undefined) =>{
+
+    let tmpIds :string[] = []
+    let notStakedNFTs: UserNFT[] = [];
+    let stakedNFTs: UserNFT[] = [];
+    let nftStatus = true;
+
+    if(tokenIds?.length == 0 || userNFTs == undefined) {
+        return {nftStatus, userNFTs, stakedNFTs}
+    }
+    const userNFTsArr = userNFTs.result;
+    if(!userNFTsArr[0].tokenID) {
+        return {nftStatus, userNFTs, stakedNFTs}
+    }
+    //deal with the tokenIds
+    let newTokenIds: string[] = [];
+    tokenIds?.forEach((val, key) => {
+        newTokenIds.push(val.toString());
+    })
+    
+    userNFTsArr?.forEach((ele, index) => {
+        if (!tmpIds.includes(ele.tokenID)) {
+            tmpIds.push(ele.tokenID);
+            if(newTokenIds.includes(ele.tokenID)) {
+                stakedNFTs.push(userNFTsArr[index])
+            } else {
+                notStakedNFTs.push(userNFTsArr[index])
+            }
+        }
+    })
+    return {nftStatus, notStakedNFTs, stakedNFTs};  
+}
 
 const Staking: NextPage = () => {
     const chainStatus = useChainState();
     const connectState = useConnectState();
     console.log('connectState', connectState);
-    const {nftStatus, stakedNFTs, notStakedNFTs, rewardToken} = useNFT();
+    // const {nftStatus, stakedNFTs, notStakedNFTs, rewardToken} = useNFT();
 
+    const {data:userNFTs, error} = getAllNFTs();
+
+    const {tokenIds, rewards:rewardToken} = useStakedNFTs();
+
+    // if(!userNFTs) {
+    //     let nftStatus = false;
+    //     let stakedNFTs: UserNFT[] = [];
+    //     let notStakedNFTs: UserNFT[] = [];
+    //     // return {nftStatus, stakedNFTs, notStakedNFTs, undefined}
+    // }
+
+    // const allnfts = userNFTs.result;
+
+    const {nftStatus, stakedNFTs, notStakedNFTs} = sortedNFTs(userNFTs, tokenIds);
+    
+    console.log('nftStatus', nftStatus);
     return (
         <div className="bg-hero min-h-screen flex-wrap py-2 px-[5%]">
             {chainStatus && <div className="absolute top-0 left-0 w-full flex bg-secondary"><div className=" mx-auto my-0 text-secondar">the current network is not Geoli Test </div></div>}
