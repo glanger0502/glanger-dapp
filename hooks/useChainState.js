@@ -6,7 +6,8 @@ export function useChainState() {
     const { chain } = useNetwork();
     const [chainState, setChainState] = useState(false);
     useEffect(() => {
-        if(chain?.id != 5) {
+        console.log(chain);
+        if(chain?.id == 5) {
             setChainState(true);
         }
     }, [chain]);

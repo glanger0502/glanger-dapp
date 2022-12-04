@@ -74,7 +74,7 @@ const Staking: NextPage = () => {
     console.log('nftStatus', nftStatus);
     return (
         <div className="bg-hero min-h-screen flex-wrap py-2 px-[5%]">
-            {chainStatus && <div className="absolute top-0 left-0 w-full flex bg-secondary"><div className=" mx-auto my-0 text-secondar">the current network is not Geoli Test </div></div>}
+            {!chainStatus && <div className="absolute top-0 left-0 w-full flex bg-secondary"><div className=" mx-auto my-0 text-secondar">the current network is not Geoli Test </div></div>}
             {connectState &&
             <div className="container items-center justify-items-center mt-4 mx-auto">
                 <NftHeader />
