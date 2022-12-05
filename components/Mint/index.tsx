@@ -33,8 +33,8 @@ export default function MintNFT() {
                     <button className="btn btn-primary" onClick={() => {setMintNum(mintNum+1)}}>+</button>
                 </div>
                 <div className="relative mx-auto my-3">
-                    { connectState &&  <MintNFTButton totalPrice={totalPrice} mintNum={mintNum} />}
-                    { !connectState && <ConnectButton />}
+                    { <MintNFTButton totalPrice={totalPrice} mintNum={mintNum} connectState={connectState} />}
+                    {/* { !connectState && <ConnectButton />} */}
                 </div>
                 <div className="relative my-3">
                         <h3 className="text-info">Mint Button is disabled?</h3>
